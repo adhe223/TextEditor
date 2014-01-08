@@ -11,11 +11,23 @@ public:
 	~File();
 
 	void display();
+	void insert(char cToInsert);
+	void del();
+	void enter();
+	void save();
+
+	int getCursorX();
+	int getCursorY();
+	void setCursorX(int x);
+	void setCursorY(int y);
 
 private:
 	//The first index is the row, the second index is the column (*NOTE* ncurses takes
 	//this in the opposite order).
 	std::vector<std::vector<char>> vvcContent;
+	std::string m_sFilename;
+	int cursor_pos_x;
+	int cursor_pos_y;
 };
 
 #endif

@@ -44,6 +44,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>D:\WINDOWS\Program Files (x86)\Microsoft Visual Studio 12.0\LIB Dumps\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -69,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Alex%27s Documents\Github\TextEditor\TextEditor\File.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\..\WINDOWS\Program Files (x86)\Microsoft Visual Studio 12.0\LIB Dumps\libs\pdcurses.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,8 @@
 #include "File.h"
 #include <iostream>
+#include <sstream>
 #include <string>
+#include <curses.h>
 using namespace std;
 
 int main()
@@ -12,14 +14,40 @@ int main()
 	cin >> sFilename;
 
 	File * file = new File(sFilename);
+
+	initscr();
+	keypad(stdscr, TRUE);
+	clear();
+
 	file->display();
 
-	/*char input;
+	char input = '!';
+	//int row = 0;
+	//int col = 0;
+
 	while (input != '`')
 	{
-		//Display the file to the user and wait for input, then display again.
+		int input = getch();
+
+		if (input == 330)
+		{
+			file->del();
+		}
+		else if (input == '\n')
+		{
+			file->enter();
+		}
+		else if (input == 19)
+		{
+			file->save();
+		}
+		else
+		{
+			file->insert(input);
+		}
+		clear();
+		file->display();
 	}
-	*/
 
 	cin.ignore(200, '\n');
 	cin.ignore(200, '\n');
