@@ -58,6 +58,15 @@ void File::insert(char cToInsert)
 	//Add new character at the end of the row (value will be changed)
 	vvcContent[row].push_back('-');
 
+	//If the cursor is at a position past the last column then we only need to
+	//insert the character there and change the cursor pos. (-1 because we added a new char)
+	if (col >= vvcContent[row].size() - 1)
+	{
+		vvcContent[row][col] = cToInsert;
+		cursor_pos_x++;
+		return;
+	}
+
 	//Shift all values at the coordinate and to the right in the row
 	for (int j = vvcContent[row].size() - 1; j > col; j--)
 	{
@@ -71,6 +80,9 @@ void File::insert(char cToInsert)
 //Takes in the coordinate of the character to delete
 void File::del()
 {
+	//!!!TO DO!!!
+	//Behavior when delete is used at the end of a line (move next line up)
+
 	//Make sure the row is not empty. If it is, then remove the row
 	if (vvcContent[cursor_pos_y].size() <= 0) 
 	{
@@ -84,6 +96,9 @@ void File::del()
 //Takes in the coordinate where a new line will be started
 void File::enter()
 {
+	//!!!TO DO!!!
+	//Behavior when delete is used at the end of a line (move next line up)
+
 	int row = cursor_pos_y;
 	int col = cursor_pos_x;
 
@@ -102,9 +117,16 @@ void File::enter()
 
 	//Now delete the characters in the coordinate row following the coordinate
 	vvcContent[row].erase(vvcContent[row].begin() + col, vvcContent[row].end());
+
+	//If we were at the end of the row
+	if (col == getRowWidth(row))
+	{
+		cursor_pos_y++;
+		cursor_pos_x = 0;
+	}
 }
 
-void File::save()\
+void File::save()
 {
 	//Open the output file (default will overwrite the existing)
 	ofstream output(m_sFilename);
@@ -139,4 +161,20 @@ void File::setCursorX(int x)
 void File::setCursorY(int y)
 {
 	cursor_pos_y = y;
+}
+
+//Returns the width of the row in question if the query is valid. If the row is an
+//invalid index then it returns -1.
+int File::getRowWidth(int row)
+{
+	if (row >= 0 && row < vvcContent.size()) 
+	{
+		return vvcContent[row].size();
+	}
+	else {return -1;}
+}
+
+int File::getNumRows()
+{
+	return vvcContent.size();
 }

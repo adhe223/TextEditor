@@ -22,11 +22,22 @@ int main()
 	file->display();
 
 	char input = '!';
-	//int row = 0;
-	//int col = 0;
+	stringstream pos;
 
 	while (input != '`')
 	{
+		//Show the cursor location
+		pos.str("");
+		pos << "(" << file->getCursorY() << ", " << file->getCursorX() << ")";
+		move(file->getNumRows(), 0);
+		addstr(pos.str().c_str());
+
+		//Make the cursor position flash
+		move(file->getCursorY(), file->getCursorX());
+		chgat(0, A_BLINK, 0, NULL);
+
+		refresh();
+		
 		int input = getch();
 
 		if (input == 330)
@@ -41,8 +52,64 @@ int main()
 		{
 			file->save();
 		}
+		else if (input == 260)
+		{
+			//Left Arrow
+			if (file->getCursorX() > 0)
+			{
+				file->setCursorX(file->getCursorX() - 1);
+			}
+		}
+		else if (input == 259)
+		{
+			//Up arrow
+			if (file->getCursorY() > 0)
+			{
+				file->setCursorY(file->getCursorY() - 1);
+			}
+
+			//Now see if the X position needs to be changed(because of row widths)
+			int currLength = file->getRowWidth(file->getCursorY());
+			if (file->getCursorX() > currLength)
+			{
+				file->setCursorX(currLength);
+			}
+		}
+		else if (input == 261)
+		{
+			//Right arrow
+			if (file->getCursorX() <= file->getRowWidth(file->getCursorY()) - 1)
+			{
+				file->setCursorX(file->getCursorX() + 1);
+			}
+		}
+		else if (input == 258)
+		{
+			//Down arrow
+			if (file->getCursorY() < file->getNumRows() - 1)
+			{
+				file->setCursorY(file->getCursorY() + 1);
+			}
+
+			//Now see if the X position needs to be changed(because of row widths)
+			int currLength = file->getRowWidth(file->getCursorY());
+			if (file->getCursorX() > currLength)
+			{
+				file->setCursorX(currLength);
+			}
+		}
 		else
 		{
+			//Input debug code
+			/*stringstream ss;
+			ss.str("");
+			ss << input;
+			clear();
+			move(0, 0);
+			addstr(ss.str().c_str());
+			refresh();
+			getch();*/
+			
 			file->insert(input);
 		}
 		clear();

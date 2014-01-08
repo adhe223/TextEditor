@@ -20,6 +20,8 @@ public:
 	int getCursorY();
 	void setCursorX(int x);
 	void setCursorY(int y);
+	int getRowWidth(int row);
+	int getNumRows();
 
 private:
 	//The first index is the row, the second index is the column (*NOTE* ncurses takes
