@@ -80,8 +80,27 @@ void File::insert(char cToInsert)
 //Takes in the coordinate of the character to delete
 void File::del()
 {
-	//!!!TO DO!!!
-	//Behavior when delete is used at the end of a line (move next line up)
+	//If at the end of the file then we do nothing
+	if (cursor_pos_y >= vvcContent.size() - 1 && cursor_pos_x >= vvcContent[cursor_pos_y].size() - 1)
+	{
+		return;
+	}
+
+	//Behavior when delete is used at the end of a line and not on last row(move next line up)
+	if (cursor_pos_x >= vvcContent[cursor_pos_y].size() && cursor_pos_y != vvcContent.size() - 1)
+	{
+		//Only need to copy the next lines contents onto the current line and then delete the next line's entry
+		//Move up
+		for (int i = 0; i < vvcContent[cursor_pos_y + 1].size(); i++)
+		{
+			vvcContent[cursor_pos_y].push_back(vvcContent[cursor_pos_y + 1][i]);
+		}
+
+		//Now delete
+		vvcContent.erase(vvcContent.begin() + cursor_pos_y + 1);
+
+		return;
+	}
 
 	//Make sure the row is not empty. If it is, then remove the row
 	if (vvcContent[cursor_pos_y].size() <= 0) 
@@ -96,9 +115,6 @@ void File::del()
 //Takes in the coordinate where a new line will be started
 void File::enter()
 {
-	//!!!TO DO!!!
-	//Behavior when delete is used at the end of a line (move next line up)
-
 	int row = cursor_pos_y;
 	int col = cursor_pos_x;
 
@@ -111,6 +127,7 @@ void File::enter()
 		vvcContent[i] = vvcContent[i - 1];
 	}
 
+	//!!!TO LOOK AT!!! - Why does this work when it is called with the cursor at the end of the file?
 	//Now delete the leading characters that are in the row after the coordinate
 	//row (it contains a copy of the coordinate row ATM)
 	vvcContent[row + 1].erase(vvcContent[row + 1].begin(), vvcContent[row + 1].begin() + col);

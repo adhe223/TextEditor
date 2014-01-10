@@ -28,6 +28,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\..\..\WINDOWS\Program Files (x86)\Microsoft Visual Studio 12.0\LIB Dumps\libs\pdcurses.lib" />
+    <Library Include="..\..\..\..\Alex%27s Documents\Github\TextEditor\Lib\pdcurses.lib" />
   </ItemGroup>
 </Project>

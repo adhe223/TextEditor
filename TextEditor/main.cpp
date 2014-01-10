@@ -21,10 +21,11 @@ int main()
 
 	file->display();
 
-	char input = '!';
+	int input = 1;
 	stringstream pos;
 
-	while (input != '`')
+	//17 is the code for ctrl+q
+	while (input != 17)
 	{
 		//Show the cursor location
 		pos.str("");
@@ -37,8 +38,8 @@ int main()
 		chgat(0, A_BLINK, 0, NULL);
 
 		refresh();
-		
-		int input = getch();
+
+		input = getch();
 
 		if (input == 330)
 		{
@@ -100,8 +101,8 @@ int main()
 		}
 		else
 		{
-			//Input debug code
-			/*stringstream ss;
+			/*//Input debug code
+			stringstream ss;
 			ss.str("");
 			ss << input;
 			clear();
@@ -109,14 +110,17 @@ int main()
 			addstr(ss.str().c_str());
 			refresh();
 			getch();*/
-			
-			file->insert(input);
+
+			//This will catch our quit command (17), so we have to exclude that
+			if (input != 17)
+			{
+				file->insert(input);
+			}
 		}
 		clear();
 		file->display();
 	}
 
-	cin.ignore(200, '\n');
-	cin.ignore(200, '\n');
+	endwin();
 	return 0;
 }
